@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8'>
+    <title>Render Ruby</title>
+  </head>
+  <body>
+    <h1>Render Ruby</h1>
+    <p>
+      This is an inception playground that makes use of Inception's ruby processing 
+      to render Ruby text in the browser. It may also serve for the development of
+      new Ruby extensions.
+    </p>
+    <button id=run>Run</button>
+    <section id='simple'>
+      <div class='ruby'>
+        <ruby>Robin<rt>RRR</rt>Berjon<rt>BBB</rt></ruby>
+      </div>
+    </section>
+    <script src='../../lib/helpers.js'></script>
+    <script src='../../lib/dom/range.js'></script>
+    <script src='../../lib/elements/ruby.js'></script>
+    <script src='../jquery.min.js'></script>
+    <script src='render-ruby.js'></script>
+  </body>
+</html>
