@@ -1,0 +1,42 @@
+
+INPUT:
+    <ruby>
+        0 Robin
+        1 <rt>RRR</rt>
+        2 Berjon
+        3 <rt>BBB</rt>
+
+ALGO:
+
+#   idx sIdx    laIdx   psIdx   cbTxt   root    baseSegs    annSegs         comment
+9   0   null    null    null    null    <ruby>  []          []              starting position
+10  0   null    null    null    null    <ruby>  []          []              no
+11  0   null    null    null    null    <ruby>  []          []              no
+12  0   0       null    null    null    <ruby>  []          []              
+13  0   0       null    null    null    <ruby>  []          []              no
+14  0   0       null    null    null    <ruby>  []          []              no
+15  1   0       null    null    null    <ruby>  []          []              
+16  1   0       null    null    null    <ruby>  []          []              no
+17  1   0       null    null    null    <ruby>  []          []              jump to 13 (base mode)
+13  1   0       null    null    null    <ruby>  []          []              no
+14  1   null    null    null    null    <ruby>  [Robin]     []              yes (rt), jump to 18 (annotation mode)
+18  1   null    null    null    null    <ruby>  [Robin]     [<rt>RRR</rt>]  yes (rt), jump to 21 (annotation mode increment)
+21  1   null    2       null    null    <ruby>  [Robin]     [<rt>RRR</rt>]  
+22  1   null    2       null    null    <ruby>  [Robin]     [<rt>RRR</rt>]  no
+23  1   null    2       null    null    <ruby>  [Robin]     [<rt>RRR</rt>]  no
+24  1   null    2       null    null    <ruby>  [Robin]     [<rt>RRR</rt>]  yes, jump to 13 (base mode)
+[I think this is where the loop is — I wonder if putting the white space skipping first and incrementing the index would work?]
+13  1   null    2       null    null    <ruby>  []          []              no
+14  1   null    null    null    null    <ruby>  [Robin]     []              yes (rt), jump to 18 (annotation mode)
+18  1   null    null    null    null    <ruby>  [Robin]     [<rt>RRR</rt>]  yes (rt), jump to 21 (annotation mode increment)
+21  1   null    2       null    null    <ruby>  [Robin]     [<rt>RRR</rt>]  
+22  1   null    2       null    null    <ruby>  [Robin]     [<rt>RRR</rt>]  no
+23  1   null    2       null    null    <ruby>  [Robin]     [<rt>RRR</rt>]  no
+24  1   null    2       null    null    <ruby>  [Robin]     [<rt>RRR</rt>]  yes, jump to 13 (base mode)
+# loop
+
+if in step 24 we set
+
+in fact the algorithm is completely broken: for instance start index only gets set in start mode, which
+is only visited for <ruby>.
+
