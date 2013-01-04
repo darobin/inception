@@ -27,9 +27,11 @@
         $rootTable.append($rootTR);
         for (var i = 0, n = data.length; i < n; i++) {
             var run = data[i]
+            ,   anns1 = run.firstCompoundAnnotations ? run.firstCompoundAnnotations.annotations : null
+            ,   anns2 = run.secondCompoundAnnotations ? run.secondCompoundAnnotations.annotations : null
             ,   max = Math.max( run.bases.length
-                            ,   run.firstCompoundAnnotations.annotations.length
-                            ,   run.secondCompoundAnnotations.annotations.length)
+                            ,   anns1 ? anns1.length : 0
+                            ,   anns2 ? anns2.length : 0 )
             ,   $td = $("<td></td>")
             ,   $table = $("<table></table>")
             ,   $firstAnnTR = $("<tr></tr>")
@@ -40,17 +42,35 @@
             $table.append($baseTR);
             $table.append($secondAnnTR);
             
-            // for each first annotation, create a td, clone the range into it, append to TR
-            // for each base, create a td, clone the range into it, append to TR
-            // for each second annotation, create a td, clone the range into it, append to TR
-            // in the last td of each annotation extend colspan if needed
-            // be careful that ranges can be null
-            // range.cloneContents()
-
+            var processRanges = function (sources, $tr) {
+                if (!sources) {
+                    var $td = $("<td>\u00a0</td>");
+                    $td.attr("colspan", max);
+                    $td.appendTo($tr);
+                    return;
+                }
+                for (var j = 0, m = sources.length; j < m; j++) {
+                    var range = sources[j].range
+                    ,   $td = $("<td></td>")
+                    ;
+                    $td.append(range ? range.cloneContents() : "\u00a0");
+                    $td.appendTo($tr);
+                    if (j === m - 1 && sources.length < max) {
+                        $td.attr("colspan", max - (sources.length - 1));
+                    }
+                }
+            };
+            processRanges(anns1, $firstAnnTR);
+            processRanges(run.bases, $baseTR);
+            processRanges(anns2, $secondAnnTR);
+            $td.append($table);
             $rootTR.append($td);
         }
         $rootTable.appendTo($cont.parent());
     }
+    // XXX
+    //  - make this pretty
+    //  - use a text area that dumps the output (with several pre-configured sets to try)
     function dump (runs) {
         var str = "";
         for (var i = 0, n = runs.length; i < n; i++) {
