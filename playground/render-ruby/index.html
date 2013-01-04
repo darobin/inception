@@ -4,6 +4,12 @@
     <meta charset='utf-8'>
     <title>Render Ruby</title>
     <link rel='stylesheet' href='../playground.css'>
+    <style>
+      textarea {
+          width:  100%;
+          height: 10em;
+      }
+    </style>
   </head>
   <body>
     <h1>Render Ruby</h1>
@@ -12,28 +18,20 @@
       to render Ruby text in the browser. It may also serve for the development of
       new Ruby extensions.
     </p>
-    <!-- <button id=run>Run</button> -->
-    <section id='simple'>
-      <div class='ruby'>
-        <ruby>Robin<rt>RRR</rt>Berjon<rt>BBB</rt>Foo</ruby>
-      </div>
-    </section>
-    <section id='messy'>
-      <div class='ruby'>
-        <ruby>
-          Robin
-          <rb>Berjon</rb>
-          <rt>RRR</rt>
-          <rt>BBB</rt>
-          <rtc>rrr<rt>bbb</rt></rtc>
-          <rb>Billie</rb>
-          Berthezène
-          <rtc><rt>BIL</rt>BER</rtc>
-          <rt>bil</rt>
-          <rt>ber</rt>
-        </ruby>
-      </div>
-    </section>
+    <p>
+      Enter some ruby below to have it processed. Don't rely too much on elements automatically
+      closing as some are not supported by the parser at this time. Hit run to see the result of
+      the processing.
+    </p>
+    <textarea id='ruby'><ruby>
+  Robin
+  <rt>RRR</rt>
+  Berjon
+  <rt>BBB</rt>
+  Foo
+</ruby></textarea>
+    <button id='run'>Run</button>
+    <div id='results'></div>
     <script src='../../lib/helpers.js'></script>
     <script src='../../lib/dom/range.js'></script>
     <script src='../../lib/elements/ruby.js'></script>
