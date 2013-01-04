@@ -1,15 +1,14 @@
 /*global Inception*/
 
 (function ($) {
-    function render (id) {
-        var $el = $("#" + id)
-        ,   $ruby = $el.find("ruby").first()
+    function render ($el) {
+        var $ruby = $el.find("ruby").first()
         ,   $cont = $ruby.parent()
         // don't use this one, as it'll blow up
         // ,   data = Inception.Elements.Ruby.segmentAndCategoriseRubyElement($ruby[0])
         ,   data = Inception.Elements.Ruby.newSegmentAndCategoriseRubyElement($ruby[0])
         ;
-        // console.log(data);
+        console.log(data);
         
         // simple dump
         var $pre = $("<pre></pre>");
@@ -52,8 +51,12 @@
         return str;
     }
     
+    $(".ruby").each(function () {
+        render($(this));
+    });
+    
     // $("#run").click(function () {
-        render("simple");
+        // render("simple");
     // });
 }(jQuery));
 
