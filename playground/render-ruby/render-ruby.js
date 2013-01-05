@@ -6,6 +6,7 @@
         $results.empty();
         render($($("#ruby").val()), $results);
     });
+    $("#run").click();
 
     function render ($ruby, $cont) {
         $cont.append("<h2>Results</h2>");
@@ -14,10 +15,10 @@
         // don't use this one, as it'll blow up
         // ,   data = Inception.Elements.Ruby.segmentAndCategoriseRubyElement($ruby[0])
         var data = Inception.Elements.Ruby.newSegmentAndCategoriseRubyElement($ruby[0]);
-        // console.log(data);
+        console.log(data);
         
         // home made rendering
-        var $rootTable = $("<table></table>")
+        var $rootTable = $("<table class='rubyRuns'></table>")
         ,   $rootTR = $("<tr></tr>")
         ;
         $rootTable.append($rootTR);
@@ -29,7 +30,7 @@
                             ,   anns1 ? anns1.length : 0
                             ,   anns2 ? anns2.length : 0 )
             ,   $td = $("<td></td>")
-            ,   $table = $("<table></table>")
+            ,   $table = $("<table class='run'></table>")
             ,   $firstAnnTR = $("<tr></tr>")
             ,   $baseTR = $("<tr></tr>")
             ,   $secondAnnTR = $("<tr></tr>")

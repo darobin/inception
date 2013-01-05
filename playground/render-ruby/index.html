@@ -9,6 +9,12 @@
           width:  100%;
           height: 10em;
       }
+      table.rubyRuns {
+          border: 2px solid #000;
+      }
+      table.run {
+          border: 1px solid #ccc;
+      }
     </style>
   </head>
   <body>
@@ -23,13 +29,15 @@
       closing as some are not supported by the parser at this time. Hit run to see the result of
       the processing.
     </p>
-    <textarea id='ruby'><ruby>
+    <textarea id='ruby'>
+<ruby>
   Robin
-  <rt>RRR</rt>
-  Berjon
-  <rt>BBB</rt>
-  Foo
-</ruby></textarea>
+  <rb>Berjon</rb>
+  <rtc>AAA</rtc>
+  <rp>RP</rp>
+  <rtc>BBB</rtc>
+</ruby>
+    </textarea>
     <button id='run'>Run</button>
     <div id='results'></div>
     <script src='../../lib/helpers.js'></script>
