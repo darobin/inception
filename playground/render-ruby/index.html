@@ -12,8 +12,14 @@
       table.rubyRuns {
           border: 2px solid #000;
       }
-      table.run {
-          border: 1px solid #ccc;
+      table.rubyRuns td {
+          border-right: 1px dashed #000;
+      }
+      table.rubyRuns td:last-of-type {
+          border-right: none;
+      }
+      table.run td {
+          border: 1px dotted #ccc;
       }
     </style>
   </head>
@@ -34,12 +40,20 @@
   Robin
   <rb>Berjon</rb>
   <rp>(</rp>
-  <rtc><rt>AAA</rt>111</rtc>
+  <rtc>
+    <rt>روبين</rt>
+    بيرجعون
+  </rtc>
   <rp>)</rp>
   <rp>[</rp>
   <rt>BBB</rt>
   <rt>222</rt>
   <rp>]</rp>
+  Billie
+  <rb>Berthezène</rb>
+  <rt>BBB</rt>
+  <rt>222</rt>
+  <rtc>longer desc</rtc>
 </ruby>
     </textarea>
     <button id='run'>Run</button>
