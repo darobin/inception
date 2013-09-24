@@ -51,7 +51,7 @@
                     ,   $td = $("<td></td>")
                     ;
                     $td.append(range ? range.cloneContents() : "\u00a0");
-                    $td.find("rp").css({ color: "#ddd", fontSize: "10px", verticalAlign: "super" });
+                    $td.find("rp").hide();
                     $td.appendTo($tr);
                     if (j === m - 1 && sources.length < max) {
                         $td.attr("colspan", max - (sources.length - 1));
