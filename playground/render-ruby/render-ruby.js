@@ -24,20 +24,23 @@
         $rootTable.append($rootTR);
         for (var i = 0, n = data.length; i < n; i++) {
             var run = data[i]
-            ,   anns1 = run.firstCompoundAnnotations ? run.firstCompoundAnnotations.annotations : null
-            ,   anns2 = run.secondCompoundAnnotations ? run.secondCompoundAnnotations.annotations : null
-            ,   max = Math.max( run.bases.length
-                            ,   anns1 ? anns1.length : 0
-                            ,   anns2 ? anns2.length : 0 )
+            ,   compAnns = run.compoundAnnotations
+            ,   max = run.bases.length
             ,   $td = $("<td></td>")
             ,   $table = $("<table class='run'></table>")
-            ,   $firstAnnTR = $("<tr></tr>")
             ,   $baseTR = $("<tr></tr>")
-            ,   $secondAnnTR = $("<tr></tr>")
+            ,   annTRs = []
             ;
-            $table.append($firstAnnTR);
+            if (compAnns) {
+                for (var j = 0, m = compAnns.length; j < m; j++) {
+                    var anns = compAnns[j].annotations;
+                    if (anns.length > max) max = anns.length;
+                    annTRs.push($("<tr></tr>"));
+                }
+            }
+            $table.append(annTRs[0] || $("<tr></tr>"));
             $table.append($baseTR);
-            $table.append($secondAnnTR);
+            for (var j = 1, m = annTRs.length; j < m; j++) $table.append(annTRs[j]);
             
             var processRanges = function (sources, $tr) {
                 if (!sources) {
@@ -58,9 +61,9 @@
                     }
                 }
             };
-            processRanges(anns1, $firstAnnTR);
+            processRanges(compAnns[0] ? compAnns[0].annotations : null, annTRs[0]);
             processRanges(run.bases, $baseTR);
-            processRanges(anns2, $secondAnnTR);
+            for (var j = 1, m = annTRs.length; j < m; j++) processRanges(compAnns[j].annotations, annTRs[j]);
             $td.append($table);
             $rootTR.append($td);
         }
@@ -86,27 +89,14 @@
                 str += "        - <<" + ssn(run.bases[j].range.toString()) + ">>\n";
             }
             str += "    \u2022 baseRange: <<" + ssn(run.baseRange.toString()) + ">>\n";
-            str += "    \u2022 first compound annotation:\n";
-            if (run.firstCompoundAnnotations) {
+            for (var j = 0, m = run.compoundAnnotations.length; j < m; j++) {
+                var ann = run.compoundAnnotations[j];
+                str += "    \u2022 compound annotation (" + j + "):\n";
                 str += "        . annotations:\n";
-                for (var j = 0, m = run.firstCompoundAnnotations.annotations.length; j < m; j++) {
-                    str += "            - <<" + ssn(run.firstCompoundAnnotations.annotations[j].range.toString()) + ">>\n";
+                for (var k = 0, p = ann.annotations.length; k < p; k++) {
+                    str += "            - <<" + ssn(ann.annotations[k].range.toString()) + ">>\n";
                 }
-                str += "        . annotationsRange: <<" + ssn(run.firstCompoundAnnotations.range.toString()) + ">>\n";
-            }
-            else {
-                str += "        null\n";
-            }
-            str += "    \u2022 second compound annotation:\n";
-            if (run.secondCompoundAnnotations) {
-                str += "        . annotations:\n";
-                for (var j = 0, m = run.secondCompoundAnnotations.annotations.length; j < m; j++) {
-                    str += "            - <<" + ssn(run.secondCompoundAnnotations.annotations[j].range.toString()) + ">>\n";
-                }
-                str += "        . annotationsRange: <<" + ssn(run.secondCompoundAnnotations.range.toString()) + ">>\n";
-            }
-            else {
-                str += "        null\n";
+                str += "        . annotationsRange: <<" + ssn(ann.range.toString()) + ">>\n";
             }
         }
         return str;
